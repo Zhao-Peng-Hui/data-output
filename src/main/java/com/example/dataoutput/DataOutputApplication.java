@@ -17,6 +17,7 @@ public class DataOutputApplication {
         ConfigurableApplicationContext run = SpringApplication.run(DataOutputApplication.class, args);
         UserExportStrategy userExportStrategy = run.getBean(UserExportStrategy.class);
         ExportTask<UserEntity, Map> exportTask = new ExportTask<>(userExportStrategy);
+        exportTask.exportTask();
     }
 
 }

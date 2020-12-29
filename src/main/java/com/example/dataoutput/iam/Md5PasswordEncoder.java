@@ -5,7 +5,7 @@
 
 package com.example.dataoutput.iam;
 
-import org.springframework.security.crypto.password.MessageDigestPasswordEncoder;
+
 
 public class Md5PasswordEncoder extends MessageDigestPasswordEncoder {
     public Md5PasswordEncoder() {
