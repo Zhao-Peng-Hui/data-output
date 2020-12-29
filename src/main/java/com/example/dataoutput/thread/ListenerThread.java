@@ -24,7 +24,12 @@ public class ListenerThread<T1, T2> implements Runnable {
         for (Future<List<T2>> future : exportTask.futureList) {
             this.outputResultFromFuture(future);
         }
-        System.out.println("本次任务执行完毕,耗时：" + (System.currentTimeMillis() - a) + "ms");
+        if (exportTask.ENABLE_PAGINATED_EXPORT) {
+            System.out.println("本次分页任务，第[" + exportTask.page + "]页执行完毕,耗时：" + (System.currentTimeMillis() - a) + "ms");
+        } else {
+            System.out.println("本次任务执行完毕,耗时：" + (System.currentTimeMillis() - a) + "ms");
+        }
+
     }
 
     private void outputResultFromFuture(Future<List<T2>> future) {
@@ -38,6 +43,8 @@ public class ListenerThread<T1, T2> implements Runnable {
             }
             List<T2> t2List = future.get();
             exportStrategy.export(t2List);
+            exportTask.futureList = null;
+            exportTask.CURRENT_PAGE_END = true;
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -36,7 +36,11 @@ public class UserExportStrategy implements ExportStrategy<UserEntity, Map> {
     @Override
     public List<UserEntity> find() {
         return mongoTemplate.find(Query.query(Criteria.where("username").regex("^T")), UserEntity.class);
+    }
 
+    @Override
+    public List<UserEntity> find(Pageable pageRequest) {
+        return mongoTemplate.find(Query.query(Criteria.where("username").regex("^8")).with(pageRequest), UserEntity.class);
     }
 
     @Override

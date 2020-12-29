@@ -1,5 +1,8 @@
 package com.example.dataoutput.strategy;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 public class Export<T1, T2> {
@@ -7,6 +10,10 @@ public class Export<T1, T2> {
 
     public List<T1> find() {
         return exportStrategy.find();
+    }
+
+    public List<T1> find(Pageable pageable) {
+        return exportStrategy.find(pageable);
     }
 
     public Export(ExportStrategy exportStrategy) {
