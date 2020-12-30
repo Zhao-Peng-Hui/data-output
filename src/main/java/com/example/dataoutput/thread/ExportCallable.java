@@ -29,13 +29,14 @@ public class ExportCallable<T1, T2> implements Callable<List<T2>> {
         List<T2> t2List = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             if (exportTask.ENABLE_PAGINATED_EXPORT) {
-                logger.info("分页任务正在执行第" + exportTask.page + "页导出，线程" + Thread.currentThread().getName() + " 正在处理第" + i + "条数据");
+//                logger.info("分页任务正在执行第" + exportTask.page + "页导出，线程" + Thread.currentThread().getName() + " 正在处理第" + i + "条数据");
             } else {
                 logger.info("线程" + Thread.currentThread().getName() + " 正在处理第" + i + "条数据");
             }
 
             t2List.add(exportStrategy.exportBuild(list.get(i)));
         }
+        logger.info("分页任务正在执行第" + exportTask.page + "页导出，线程" + Thread.currentThread().getName() + " 完毕");
         return t2List;
     }
 }

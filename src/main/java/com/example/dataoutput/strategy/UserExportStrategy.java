@@ -40,7 +40,11 @@ public class UserExportStrategy implements ExportStrategy<UserEntity, Map> {
 
     @Override
     public List<UserEntity> find(Pageable pageRequest) {
-        return mongoTemplate.find(Query.query(Criteria.where("username").regex("^8")).with(pageRequest), UserEntity.class);
+        System.out.println("查询开始-------");
+        long star=System.currentTimeMillis();
+        List<UserEntity> list = mongoTemplate.find(Query.query(Criteria.where("username").regex("^8")).with(pageRequest), UserEntity.class);
+        System.out.println("查询结束------->耗时："+(System.currentTimeMillis()-star));
+        return list;
     }
 
     @Override
@@ -78,11 +82,10 @@ public class UserExportStrategy implements ExportStrategy<UserEntity, Map> {
         BufferedWriter out = null;
         try {
             out = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream("D:\\bbb.txt", true)));
+                    new FileOutputStream("/opt/test/bbb.txt", true)));
             for (Map m : list) {
                 out.write(m.get("username") + "," + m.get("org") + "\r\n");
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

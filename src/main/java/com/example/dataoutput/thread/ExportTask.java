@@ -27,7 +27,7 @@ public class ExportTask<T1, T2> {
     }
 
     //指定线程数
-    public static Integer THREAD_COUNT = 100;
+    public static Integer THREAD_COUNT = 50;
 
     public static Integer PAGE_SIZE = 100000;
 
@@ -47,11 +47,16 @@ public class ExportTask<T1, T2> {
             List<T1> list = null;
             do {
                 if (CURRENT_PAGE_END) {
-                    page = pageable.getPageNumber() + 1;
                     CURRENT_PAGE_END = false;
+                    page = pageable.getPageNumber() + 1;
                     list = export.find(pageable);
                     extracted(list);
                     pageable = PageRequest.of(pageable.getPageNumber() + 1, pageable.getPageSize());
+                }
+                try {
+                    Thread.sleep(1l);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             } while (list.size() == PAGE_SIZE);
         } else {
